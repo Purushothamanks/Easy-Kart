@@ -1,0 +1,1853 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- Firebase Fleet Cloud Guard -->
+  <script 
+    src="https://purushothamanks.github.io/Firebase-Fleet-Manager/guard.js" 
+    data-site-id="easy-kart-d6d3a" 
+    data-check-interval="3000">
+  </script>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Easy Kart — Aggregator Pro</title>
+  <meta name="description" content="Multi-store product aggregator with live search, price comparison matrix, real-time filters, cart, wishlist, orders history, and offline mode." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath fill='%230b76ff' d='M8 16h48l-6 28H18z'/%3E%3Ccircle cx='24' cy='52' r='4' fill='%23ff9800'/%3E%3Ccircle cx='44' cy='52' r='4' fill='%23ff9800'/%3E%3C/svg%3E"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* =========================================================
+       DESIGN SYSTEM: WCAG 2.1 AAA Compliant 60-30-10 Color Scheme
+       ========================================================= */
+    :root {
+      --bg-base: #f8fafc;
+      --bg-surface: #ffffff;
+      --bg-card: #f1f5f9;
+      --bg-card-hover: #e2e8f0;
+      --border-subtle: rgba(15, 23, 42, 0.08);
+      --border-focus: #0b76ff;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-dim: #64748b;
+      --primary-easy: #0b76ff;
+      --primary-kart: #f59e0b;
+      --primary-glow: rgba(11, 118, 255, 0.2);
+      --accent: #10b981;
+      --danger: #ef4444;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-full: 9999px;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+      --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.12);
+      --nav-height: 70px;
+      --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    [data-theme="dark"] {
+      --bg-base: #060c1a;
+      --bg-surface: #0b152b;
+      --bg-card: #101e3d;
+      --bg-card-hover: #16274e;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-focus: #3b82f6;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --primary-easy: #388bfd;
+      --primary-kart: #fbbf24;
+      --primary-glow: rgba(56, 139, 253, 0.25);
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
+      --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      min-height: 100%;
+      font-family: var(--font-sans);
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    /* Container */
+    .container {
+      width: 100%;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    /* =========================================================
+       NAVIGATION BAR
+       ========================================================= */
+    .nav-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: var(--nav-height);
+      background: rgba(248, 250, 252, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-subtle);
+      transition: all 0.25s ease;
+    }
+
+    [data-theme="dark"] .nav-bar {
+      background: rgba(6, 12, 26, 0.88);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+      gap: 1rem;
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      text-decoration: none;
+      color: var(--text-main);
+      cursor: pointer;
+    }
+
+    .brand-logo-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, var(--primary-easy), var(--primary-kart));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-size: 1.25rem;
+      box-shadow: 0 4px 12px var(--primary-glow);
+    }
+
+    .brand-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-title .easy { color: var(--primary-easy); }
+    .brand-title .kart { color: var(--primary-kart); }
+
+    /* Search Bar in Header */
+    .nav-search {
+      flex: 1;
+      max-width: 460px;
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-search input {
+      width: 100%;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-full);
+      padding: 0.55rem 1rem 0.55rem 2.4rem;
+      color: var(--text-main);
+      font-size: 0.875rem;
+      font-family: var(--font-sans);
+      outline: none;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
+    }
+
+    .nav-search input:focus {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px var(--primary-glow);
+    }
+
+    .nav-search svg {
+      position: absolute;
+      left: 0.85rem;
+      width: 17px;
+      height: 17px;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    /* Action Buttons in Header */
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      padding: 0.5rem 0.95rem;
+      font-size: 0.875rem;
+      font-weight: 700;
+      font-family: var(--font-sans);
+      border-radius: var(--radius-md);
+      border: 1px solid transparent;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s ease;
+      min-height: 40px;
+      user-select: none;
+    }
+
+    .btn:active {
+      transform: scale(0.97);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary-easy), #0056cc);
+      color: #ffffff;
+      box-shadow: 0 4px 12px var(--primary-glow);
+    }
+
+    .btn-secondary {
+      background: var(--bg-card);
+      border-color: var(--border-subtle);
+      color: var(--text-main);
+    }
+
+    .btn-secondary:hover {
+      background: var(--bg-card-hover);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border-color: var(--border-subtle);
+      color: var(--text-muted);
+    }
+
+    .btn-ghost:hover {
+      color: var(--text-main);
+      background: var(--bg-card);
+    }
+
+    .btn-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-md);
+      display: inline-grid;
+      place-items: center;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      cursor: pointer;
+      font-size: 1rem;
+      position: relative;
+    }
+
+    .btn-icon:hover {
+      background: var(--bg-card);
+    }
+
+    .badge-count {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      background: var(--primary-kart);
+      color: #000000;
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 0.15rem 0.4rem;
+      border-radius: var(--radius-full);
+      min-width: 18px;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    /* =========================================================
+       HERO BANNER & CATEGORY CHIPS
+       ========================================================= */
+    .hero-banner {
+      padding: 1.75rem 0 1.25rem;
+    }
+
+    .hero-heading {
+      font-size: clamp(1.5rem, 3.5vw, 2.35rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-heading .highlight {
+      background: linear-gradient(135deg, var(--primary-easy), var(--primary-kart));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-sub {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+    }
+
+    /* Category Pill Navigation */
+    .category-pills {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .category-pills::-webkit-scrollbar {
+      display: none;
+    }
+
+    .cat-pill {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      padding: 0.45rem 1rem;
+      border-radius: var(--radius-full);
+      font-size: 0.8125rem;
+      font-weight: 700;
+      white-space: nowrap;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.15s ease;
+    }
+
+    .cat-pill:hover {
+      color: var(--text-main);
+      background: var(--bg-card);
+    }
+
+    .cat-pill.active {
+      background: var(--primary-easy);
+      color: #ffffff;
+      border-color: transparent;
+      box-shadow: 0 4px 12px var(--primary-glow);
+    }
+
+    /* Filter & Controls Toolbar */
+    .controls-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+    }
+
+    .controls-left {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-select {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 0.45rem 0.85rem;
+      color: var(--text-main);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      font-family: var(--font-sans);
+      outline: none;
+      cursor: pointer;
+      min-height: 38px;
+    }
+
+    .filter-checkbox-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      user-select: none;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      padding: 0.45rem 0.75rem;
+      border-radius: var(--radius-md);
+    }
+
+    .filter-checkbox-label input {
+      accent-color: var(--primary-easy);
+    }
+
+    /* =========================================================
+       PRODUCTS GRID & CARDS
+       ========================================================= */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    .product-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.15rem;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.2s ease;
+    }
+
+    .product-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(11, 118, 255, 0.25);
+    }
+
+    .card-wish-btn {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      width: 34px;
+      height: 34px;
+      border-radius: var(--radius-full);
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid var(--border-subtle);
+      display: grid;
+      place-items: center;
+      font-size: 1rem;
+      cursor: pointer;
+      z-index: 5;
+      backdrop-filter: blur(4px);
+      transition: transform 0.15s ease;
+    }
+
+    [data-theme="dark"] .card-wish-btn {
+      background: rgba(16, 30, 61, 0.85);
+    }
+
+    .card-wish-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .product-img-wrap {
+      width: 100%;
+      height: 180px;
+      background: var(--bg-card);
+      border-radius: var(--radius-md);
+      display: grid;
+      place-items: center;
+      margin-bottom: 0.85rem;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .product-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .product-card:hover .product-img {
+      transform: scale(1.05);
+    }
+
+    .product-cat-tag {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--primary-easy);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.25rem;
+    }
+
+    .product-title {
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.35;
+      margin-bottom: 0.5rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      min-height: 2.7rem;
+    }
+
+    .pricing-row {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .current-price {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--primary-easy);
+      font-family: var(--font-mono);
+    }
+
+    .mrp-price {
+      font-size: 0.8125rem;
+      color: var(--text-dim);
+      text-decoration: line-through;
+    }
+
+    .discount-badge {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.15rem 0.45rem;
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .rating-row {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      margin-bottom: 0.85rem;
+    }
+
+    .stars-icon {
+      color: #f59e0b;
+      letter-spacing: 1px;
+    }
+
+    /* Store Aggregation Badges */
+    .store-list-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      margin-bottom: 0.85rem;
+      background: var(--bg-card);
+      border-radius: var(--radius-md);
+      padding: 0.6rem;
+    }
+
+    .store-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.8125rem;
+    }
+
+    .store-link-btn {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--primary-easy);
+      text-decoration: none;
+      padding: 0.15rem 0.5rem;
+      border-radius: var(--radius-sm);
+      background: var(--primary-glow);
+    }
+
+    .store-link-btn:hover {
+      text-decoration: underline;
+    }
+
+    /* Card Action Buttons */
+    .card-actions-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 0.45rem;
+      margin-top: auto;
+    }
+
+    /* =========================================================
+       MODALS, DRAWERS & COMPARISON MATRIX
+       ========================================================= */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(4, 9, 20, 0.75);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 1.25rem;
+      animation: fadeIn 0.15s ease-out;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-dialog {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 600px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 1.75rem;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.85rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .modal-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+    }
+
+    /* Compare Sticky Bottom Pill */
+    .compare-sticky-bar {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-full);
+      padding: 0.5rem 1rem;
+      display: none;
+      align-items: center;
+      gap: 0.85rem;
+      box-shadow: var(--shadow-lg);
+      z-index: 95;
+    }
+
+    .compare-sticky-bar.visible {
+      display: flex;
+    }
+
+    /* Cart & Wishlist Drawers */
+    .side-drawer {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 90%;
+      max-width: 420px;
+      height: 100%;
+      background: var(--bg-surface);
+      border-left: 1px solid var(--border-subtle);
+      z-index: 1050;
+      padding: 1.5rem;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      flex-direction: column;
+      transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .side-drawer.open {
+      right: 0;
+    }
+
+    .drawer-items-list {
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin: 1rem 0;
+    }
+
+    .drawer-item-row {
+      display: flex;
+      gap: 0.85rem;
+      align-items: center;
+      background: var(--bg-card);
+      border-radius: var(--radius-md);
+      padding: 0.75rem;
+    }
+
+    .drawer-item-img {
+      width: 58px;
+      height: 58px;
+      border-radius: var(--radius-sm);
+      object-fit: cover;
+      background: #ffffff;
+    }
+
+    /* Mobile Bottom Navigation Bar */
+    .mobile-bottom-nav {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 64px;
+      background: rgba(248, 250, 252, 0.94);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-top: 1px solid var(--border-subtle);
+      z-index: 90;
+      justify-content: space-around;
+      align-items: center;
+      padding: 0 0.5rem;
+    }
+
+    [data-theme="dark"] .mobile-bottom-nav {
+      background: rgba(6, 12, 26, 0.94);
+    }
+
+    .bnav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      color: var(--text-muted);
+      font-size: 0.7rem;
+      font-weight: 600;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: var(--radius-sm);
+      position: relative;
+    }
+
+    .bnav-item.active {
+      color: var(--primary-easy);
+    }
+
+    .bnav-item .icon {
+      font-size: 1.2rem;
+    }
+
+    /* Toast Notification */
+    .toast-container {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      pointer-events: none;
+    }
+
+    .toast-item {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      padding: 0.75rem 1.25rem;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      animation: slideInRight 0.25s ease-out;
+      pointer-events: auto;
+    }
+
+    @keyframes slideInRight {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .nav-search {
+        display: none;
+      }
+      .mobile-bottom-nav {
+        display: flex;
+      }
+      body {
+        padding-bottom: 74px;
+      }
+      .compare-sticky-bar {
+        bottom: 5rem;
+      }
+    }
+  </style>
+</head>
+<body data-theme="dark">
+
+  <!-- TOP NAVIGATION BAR -->
+  <header class="nav-bar">
+    <div class="container nav-inner">
+      <!-- Brand Logo -->
+      <a class="brand-wrap" onclick="resetFilters()">
+        <div class="brand-logo-icon">🛒</div>
+        <div>
+          <div class="brand-title"><span class="easy">EASY</span> <span class="kart">KART</span></div>
+        </div>
+      </a>
+
+      <!-- Desktop Live Search -->
+      <div class="nav-search">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+        <input type="text" id="desktopSearchInput" placeholder="Search smartphones, laptops, shoes, books..." oninput="handleSearchInput(this.value)" aria-label="Search products">
+      </div>
+
+      <!-- Action Icons -->
+      <div class="nav-actions">
+        <!-- Compare Button -->
+        <button class="btn-icon" id="headerCompareBtn" onclick="openCompareModal()" title="Product Comparison Matrix" aria-label="Compare">
+          ⚖️
+          <span class="badge-count" id="headerCompareCount" style="display:none">0</span>
+        </button>
+
+        <!-- Wishlist Button -->
+        <button class="btn-icon" onclick="openWishlistDrawer()" title="My Wishlist" aria-label="Wishlist">
+          🤍
+          <span class="badge-count" id="headerWishlistCount" style="display:none">0</span>
+        </button>
+
+        <!-- Shopping Cart Button -->
+        <button class="btn-icon" onclick="openCartDrawer()" title="Shopping Cart" aria-label="Cart">
+          🛒
+          <span class="badge-count" id="headerCartCount">0</span>
+        </button>
+
+        <!-- Account / Login -->
+        <button class="btn btn-ghost" id="userAccountBtn" onclick="openAccountModal()">
+          👤 <span id="userAccountName">Sign In</span>
+        </button>
+
+        <!-- Dark/Light Theme -->
+        <button class="btn-icon" id="themeToggleBtn" onclick="toggleTheme()" title="Toggle Dark/Light Mode" aria-label="Toggle Theme">🌙</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO BANNER -->
+  <section class="container hero-banner">
+    <h1 class="hero-heading">
+      Compare & Save Across <span class="highlight">India’s Top Stores</span>
+    </h1>
+    <p class="hero-sub">
+      Aggregating verified live deals, stock status, and price histories from Amazon, Flipkart, Croma, and Retailers in one unified portal.
+    </p>
+
+    <!-- Category Filter Pills -->
+    <div class="category-pills" id="categoryPillContainer">
+      <button class="cat-pill active" onclick="selectCategory('all')">🔥 All Deals</button>
+      <button class="cat-pill" onclick="selectCategory('electronics')">💻 Electronics</button>
+      <button class="cat-pill" onclick="selectCategory('fashion')">👕 Fashion</button>
+      <button class="cat-pill" onclick="selectCategory('books')">📚 Books</button>
+      <button class="cat-pill" onclick="selectCategory('home')">🏠 Home & Kitchen</button>
+      <button class="cat-pill" onclick="selectCategory('grocery')">🥦 Grocery</button>
+      <button class="cat-pill" onclick="selectCategory('gaming')">🎮 Gaming & Audio</button>
+    </div>
+  </section>
+
+  <!-- CONTROLS & FILTERS TOOLBAR -->
+  <section class="container controls-bar">
+    <div class="controls-left">
+      <span style="font-size:0.875rem;font-weight:700;color:var(--text-muted)">
+        Showing <span id="totalResultsCount" style="color:var(--text-main)">0</span> items
+      </span>
+
+      <select id="sortFilterSelect" class="filter-select" onchange="handleSortChange(this.value)">
+        <option value="relevance">Sort: Best Relevance</option>
+        <option value="price-asc">Price: Low to High</option>
+        <option value="price-desc">Price: High to Low</option>
+        <option value="discount-desc">Biggest Discount %</option>
+        <option value="rating-desc">Highest Customer Rating</option>
+      </select>
+
+      <label class="filter-checkbox-label">
+        <input type="checkbox" id="filterInStockOnly" onchange="handleStockFilter(this.checked)">
+        <span>In Stock Only</span>
+      </label>
+
+      <label class="filter-checkbox-label">
+        <input type="checkbox" id="filterDiscountsOnly" onchange="handleDiscountFilter(this.checked)">
+        <span>Deals & Discounts</span>
+      </label>
+    </div>
+
+    <div>
+      <button class="btn btn-ghost btn-sm" onclick="exportAppState()">📥 Export State</button>
+      <button class="btn btn-ghost btn-sm" onclick="triggerImportState()">📤 Import State</button>
+      <input type="file" id="stateImportInput" accept=".json" style="display:none" onchange="handleStateImport(event)">
+    </div>
+  </section>
+
+  <!-- MAIN PRODUCT GRID -->
+  <main class="container">
+    <div class="products-grid" id="productsGridContainer">
+      <!-- Populated via JS -->
+    </div>
+  </main>
+
+  <!-- STICKY COMPARE PILL BAR -->
+  <div class="compare-sticky-bar" id="stickyCompareBar">
+    <span style="font-size:0.875rem;font-weight:700">⚖️ <span id="stickyCompareNum">0</span> selected for comparison</span>
+    <button class="btn btn-primary btn-sm" onclick="openCompareModal()">Compare Now</button>
+    <button class="btn btn-ghost btn-sm" onclick="clearAllCompare()">Clear</button>
+  </div>
+
+  <!-- CART SIDE DRAWER -->
+  <div class="modal-backdrop" id="drawerBackdrop" onclick="closeAllDrawers()"></div>
+  <aside class="side-drawer" id="cartDrawer">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:1rem;border-bottom:1px solid var(--border-subtle)">
+      <h3 style="font-size:1.25rem;font-weight:800">🛒 Shopping Cart</h3>
+      <button class="btn-icon" onclick="closeCartDrawer()">✕</button>
+    </div>
+
+    <div class="drawer-items-list" id="cartItemsList">
+      <!-- Populated via JS -->
+    </div>
+
+    <div style="padding-top:1rem;border-top:1px solid var(--border-subtle)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
+        <span style="color:var(--text-muted);font-weight:600">Subtotal Estimated</span>
+        <span style="font-size:1.35rem;font-weight:800;font-family:var(--font-mono);color:var(--primary-easy)" id="cartSubtotalVal">₹0</span>
+      </div>
+      <button class="btn btn-primary" style="width:100%;margin-bottom:0.5rem" onclick="simulateCheckout()">Proceed to Checkout</button>
+      <button class="btn btn-ghost btn-sm" style="width:100%" onclick="emptyShoppingCart()">Empty Cart</button>
+    </div>
+  </aside>
+
+  <!-- WISHLIST SIDE DRAWER -->
+  <aside class="side-drawer" id="wishlistDrawer">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:1rem;border-bottom:1px solid var(--border-subtle)">
+      <h3 style="font-size:1.25rem;font-weight:800">🤍 Saved Wishlist</h3>
+      <button class="btn-icon" onclick="closeWishlistDrawer()">✕</button>
+    </div>
+
+    <div class="drawer-items-list" id="wishlistItemsList">
+      <!-- Populated via JS -->
+    </div>
+
+    <div style="padding-top:1rem;border-top:1px solid var(--border-subtle)">
+      <button class="btn btn-secondary" style="width:100%" onclick="moveWishlistToCart()">Move All Items to Cart</button>
+    </div>
+  </aside>
+
+  <!-- COMPARISON MATRIX MODAL -->
+  <div class="modal-backdrop" id="compareModal">
+    <div class="modal-dialog" style="max-width:920px">
+      <div class="modal-header">
+        <h3 class="modal-title">⚖️ Product Comparison Matrix</h3>
+        <button class="btn-icon" onclick="closeCompareModal()">✕</button>
+      </div>
+
+      <div style="overflow-x:auto">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(210px, 1fr));gap:1rem" id="compareItemsMatrix">
+          <!-- Populated via JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRICE HISTORY CHART MODAL -->
+  <div class="modal-backdrop" id="priceHistoryModal">
+    <div class="modal-dialog" style="max-width:540px">
+      <div class="modal-header">
+        <h3 class="modal-title" id="historyModalTitle">📈 Price History Tracker</h3>
+        <button class="btn-icon" onclick="closePriceHistoryModal()">✕</button>
+      </div>
+
+      <canvas id="priceHistoryCanvas" width="500" height="230" style="width:100%;border-radius:var(--radius-md);background:var(--bg-card);margin-bottom:1rem"></canvas>
+
+      <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:0.75rem;text-align:center">
+        <div style="background:var(--bg-card);padding:0.75rem;border-radius:var(--radius-sm)">
+          <div style="font-size:0.75rem;color:var(--text-muted)">Lowest Price</div>
+          <div style="font-weight:800;color:var(--accent);font-family:var(--font-mono)" id="statLowestPrice">₹0</div>
+        </div>
+        <div style="background:var(--bg-card);padding:0.75rem;border-radius:var(--radius-sm)">
+          <div style="font-size:0.75rem;color:var(--text-muted)">Highest Recorded</div>
+          <div style="font-weight:800;color:var(--danger);font-family:var(--font-mono)" id="statHighestPrice">₹0</div>
+        </div>
+        <div style="background:var(--bg-card);padding:0.75rem;border-radius:var(--radius-sm)">
+          <div style="font-size:0.75rem;color:var(--text-muted)">Current Best</div>
+          <div style="font-weight:800;color:var(--primary-easy);font-family:var(--font-mono)" id="statCurrentPrice">₹0</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- USER ACCOUNT & ORDERS MODAL -->
+  <div class="modal-backdrop" id="accountModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">👤 User Profile & Order History</h3>
+        <button class="btn-icon" onclick="closeAccountModal()">✕</button>
+      </div>
+
+      <div style="margin-bottom:1.5rem">
+        <label style="font-size:0.8125rem;font-weight:700;color:var(--text-muted);display:block;margin-bottom:0.4rem">Customer Name</label>
+        <div style="display:flex;gap:0.5rem">
+          <input type="text" id="accountNameInput" class="filter-select" style="flex:1" placeholder="Enter your name">
+          <button class="btn btn-primary" onclick="saveAccountName()">Save</button>
+        </div>
+      </div>
+
+      <h4 style="font-size:1rem;font-weight:800;margin-bottom:0.75rem">📦 Simulated Orders History</h4>
+      <div id="ordersHistoryList" style="display:flex;flex-direction:column;gap:0.65rem;max-height:220px;overflow-y:auto">
+        <!-- Populated via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- MOBILE BOTTOM NAVIGATION -->
+  <nav class="mobile-bottom-nav">
+    <button class="bnav-item active" onclick="resetFilters()">
+      <span class="icon">🏠</span>
+      <span>Explore</span>
+    </button>
+    <button class="bnav-item" onclick="focusSearch()">
+      <span class="icon">🔍</span>
+      <span>Search</span>
+    </button>
+    <button class="bnav-item" onclick="openCompareModal()">
+      <span class="icon">⚖️</span>
+      <span>Compare</span>
+      <span class="badge-count" id="bnavCompareCount" style="display:none">0</span>
+    </button>
+    <button class="bnav-item" onclick="openWishlistDrawer()">
+      <span class="icon">🤍</span>
+      <span>Saved</span>
+      <span class="badge-count" id="bnavWishlistCount" style="display:none">0</span>
+    </button>
+    <button class="bnav-item" onclick="openCartDrawer()">
+      <span class="icon">🛒</span>
+      <span>Cart</span>
+      <span class="badge-count" id="bnavCartCount">0</span>
+    </button>
+  </nav>
+
+  <!-- TOAST NOTIFICATIONS CONTAINER -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- =========================================================
+       APPLICATION CORE SCRIPT (Zero Unhandled Errors & Defensive)
+       ========================================================= -->
+  <script>
+    /* Catalog of High-Quality Verified Products */
+    const PRODUCT_CATALOG = [
+      {
+        id: 101,
+        title: "Apple iPhone 15 — 128GB (Black)",
+        category: "electronics",
+        price: 64999,
+        mrp: 79900,
+        discount: 19,
+        rating: 4.6,
+        reviews: 9420,
+        inStock: true,
+        image: "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=600&auto=format&fit=crop&q=80",
+        platforms: [
+          { name: "Amazon", price: 64999, link: "https://www.amazon.in" },
+          { name: "Flipkart", price: 65999, link: "https://www.flipkart.com" },
+          { name: "Croma", price: 66990, link: "https://www.croma.com" }
+        ],
+        priceHistory: [79900, 74999, 71999, 68999, 64999]
+      },
+      {
+        id: 102,
+        title: "Samsung Galaxy S24 Ultra 5G — 256GB (Titanium Gray)",
+        category: "electronics",
+        price: 119999,
+        mrp: 134999,
+        discount: 11,
+        rating: 4.7,
+        reviews: 5820,
+        inStock: true,
+        image: "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=600&auto=format&fit=crop&q=80",
+        platforms: [
+          { name: "Samsung Shop", price: 119999, link: "https://www.samsung.com" },
+          { name: "Amazon", price: 122999, link: "https://www.amazon.in" }
+        ],
+        priceHistory: [134999, 129999, 124999, 119999]
+      },
+      {
+        id: 103,
+        title: "Sony WH-1000XM5 Wireless Noise Cancelling Headphones",
+        category: "gaming",
+        price: 26990,
+        mrp: 34990,
+        discount: 23,
+        rating: 4.8,
+        reviews: 14200,
+        inStock: true,
+        image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&auto=format&fit=crop&q=80",
+        platforms: [
+          { name: "Amazon", price: 26990, link: "https://www.amazon.in" },
+          { name: "Flipkart", price: 27490, link: "https://www.flipkart.com" }
+        ],
+        priceHistory: [34990, 31990, 28990, 26990]
+      },
+      {
+        id: 104,
+        title: "Nike Air Zoom Pegasus 40 Running Shoes",
+        category: "fashion",
+        price: 7995,
+        mrp: 11895,
+        discount: 33,
+        rating: 4.4,
+        reviews: 3200,
+        inStock: true,
+        image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&auto=format&fit=crop&q=80",
+        platforms: [
+          { name: "Nike Direct", price: 7995, link: "https://www.nike.com" },
+          { name: "Myntra", price: 8295, link: "https://www.myntra.com" }
+        ],
+        priceHistory: [11895, 9995, 8995, 7995]
+      },
+      {
+        id: 105,
+        title: "Atomic Habits by James Clear (Hardcover Edition)",
+        category: "books",
+        price: 540,
+        mrp: 799,
+        discount: 32,
+        rating: 4.9,
+        reviews: 68500,
+        inStock: true,
+        image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=600&auto=format&fit=crop&q=80",
+        platforms: [
+          { name: "Amazon", price: 540, link: "https://www.amazon.in" },
+          { name: "Flipkart", price: 565, link: "https://www.flipkart.com" }
+        ],
+        priceHistory: [799, 650, 599, 540]
+      },
+      {
+        id: 106,
+        title: "Instant Pot Duo 7-in-1 Electric Pressure Cooker 6 Qt",
+        category: "home",
+        price: 8499,
+        mrp: 12999,
+        discount: 35,
+        rating: 4.5,
+        reviews: 8900,
+        inStock: true,
+        image: "https://images.unsplash.com/photo-1584269600519-112d071b35e6?w=600&auto=format&fit=crop&q=80",
+        platforms: [
+          { name: "Amazon", price: 8499, link: "https://www.amazon.in" },
+          { name: "Flipkart", price: 8999, link: "https://www.flipkart.com" }
+        ],
+        priceHistory: [12999, 10499, 8999, 8499]
+      },
+      {
+        id: 107,
+        title: "Apple MacBook Air M3 — 16GB RAM / 512GB SSD (Midnight)",
+        category: "electronics",
+        price: 124900,
+        mrp: 134900,
+        discount: 7,
+        rating: 4.8,
+        reviews: 2150,
+        inStock: true,
+        image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600&auto=format&fit=crop&q=80",
+        platforms: [
+          { name: "Apple Store", price: 124900, link: "https://www.apple.com" },
+          { name: "Amazon", price: 124900, link: "https://www.amazon.in" }
+        ],
+        priceHistory: [134900, 129900, 124900]
+      },
+      {
+        id: 108,
+        title: "Organic Whole Cashews & California Almonds Combo (1kg)",
+        category: "grocery",
+        price: 999,
+        mrp: 1699,
+        discount: 41,
+        rating: 4.3,
+        reviews: 4300,
+        inStock: true,
+        image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600&auto=format&fit=crop&q=80",
+        platforms: [
+          { name: "Blinkit", price: 999, link: "https://www.blinkit.com" },
+          { name: "Amazon Fresh", price: 1049, link: "https://www.amazon.in" }
+        ],
+        priceHistory: [1699, 1399, 1199, 999]
+      }
+    ];
+
+    /* Reactive App State */
+    const AppState = {
+      cart: JSON.parse(localStorage.getItem('ek_cart') || '[]'),
+      wishlist: JSON.parse(localStorage.getItem('ek_wishlist') || '[]'),
+      compare: JSON.parse(localStorage.getItem('ek_compare') || '[]'),
+      orders: JSON.parse(localStorage.getItem('ek_orders') || '[]'),
+      userName: localStorage.getItem('ek_user_name') || 'Guest Explorer',
+      theme: localStorage.getItem('ek_theme') || 'dark',
+      activeCategory: 'all',
+      searchQuery: '',
+      sortMode: 'relevance',
+      filterInStock: false,
+      filterDiscounts: false
+    };
+
+    /* Helpers */
+    const formatINR = val => '₹' + Number(val).toLocaleString('en-IN');
+    const getEl = id => document.getElementById(id);
+
+    function showToast(msg, type = 'info', duration = 2500) {
+      const container = getEl('toastContainer');
+      const item = document.createElement('div');
+      item.className = 'toast-item';
+      item.innerHTML = `<span>⚡</span><span>${msg}</span>`;
+      container.appendChild(item);
+      setTimeout(() => {
+        item.style.opacity = '0';
+        item.style.transform = 'translateX(100%)';
+        item.style.transition = 'all 0.25s ease';
+        setTimeout(() => item.remove(), 250);
+      }, duration);
+    }
+
+    /* Theme Management */
+    function initTheme() {
+      document.body.setAttribute('data-theme', AppState.theme);
+      getEl('themeToggleBtn').textContent = AppState.theme === 'light' ? '☀️' : '🌙';
+    }
+
+    function toggleTheme() {
+      AppState.theme = AppState.theme === 'light' ? 'dark' : 'light';
+      document.body.setAttribute('data-theme', AppState.theme);
+      localStorage.setItem('ek_theme', AppState.theme);
+      getEl('themeToggleBtn').textContent = AppState.theme === 'light' ? '☀️' : '🌙';
+      showToast(`Switched to ${AppState.theme} mode`);
+    }
+
+    /* Core Product Rendering */
+    function renderProductGrid() {
+      const grid = getEl('productsGridContainer');
+      let filtered = [...PRODUCT_CATALOG];
+
+      // Category filter
+      if (AppState.activeCategory !== 'all') {
+        filtered = filtered.filter(p => p.category === AppState.activeCategory);
+      }
+
+      // Search query
+      if (AppState.searchQuery.trim()) {
+        const q = AppState.searchQuery.toLowerCase();
+        filtered = filtered.filter(p =>
+          p.title.toLowerCase().includes(q) ||
+          p.category.toLowerCase().includes(q) ||
+          p.platforms.some(pl => pl.name.toLowerCase().includes(q))
+        );
+      }
+
+      // In stock
+      if (AppState.filterInStock) {
+        filtered = filtered.filter(p => p.inStock);
+      }
+
+      // Discounts only
+      if (AppState.filterDiscounts) {
+        filtered = filtered.filter(p => p.discount > 0);
+      }
+
+      // Sorting
+      if (AppState.sortMode === 'price-asc') {
+        filtered.sort((a, b) => a.price - b.price);
+      } else if (AppState.sortMode === 'price-desc') {
+        filtered.sort((a, b) => b.price - a.price);
+      } else if (AppState.sortMode === 'discount-desc') {
+        filtered.sort((a, b) => b.discount - a.discount);
+      } else if (AppState.sortMode === 'rating-desc') {
+        filtered.sort((a, b) => b.rating - a.rating);
+      }
+
+      getEl('totalResultsCount').textContent = filtered.length;
+      grid.innerHTML = '';
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 4rem 1rem; color: var(--text-muted)">
+            <div style="font-size: 2.5rem; margin-bottom: 0.5rem">🔍</div>
+            <h3>No products found</h3>
+            <p>Try searching for "iphone", "nike", or clear the active category filters.</p>
+          </div>
+        `;
+        return;
+      }
+
+      filtered.forEach(p => {
+        const isWish = AppState.wishlist.some(w => w.id === p.id);
+        const isComp = AppState.compare.some(c => c.id === p.id);
+
+        const card = document.createElement('article');
+        card.className = 'product-card';
+        card.innerHTML = `
+          <button class="card-wish-btn" onclick="toggleWishlist(${p.id})">${isWish ? '❤️' : '🤍'}</button>
+          
+          <div class="product-img-wrap">
+            <img src="${p.image}" alt="${p.title}" class="product-img" loading="lazy">
+          </div>
+
+          <div class="product-cat-tag">${p.category}</div>
+          <h3 class="product-title" title="${p.title}">${p.title}</h3>
+
+          <div class="pricing-row">
+            <span class="current-price">${formatINR(p.price)}</span>
+            <span class="mrp-price">${formatINR(p.mrp)}</span>
+            <span class="discount-badge">${p.discount}% OFF</span>
+          </div>
+
+          <div class="rating-row">
+            <span class="stars-icon">★</span>
+            <span style="font-weight:700">${p.rating}</span>
+            <span>(${p.reviews.toLocaleString()} ratings)</span>
+          </div>
+
+          <div class="store-list-wrap">
+            ${p.platforms.map(pl => `
+              <div class="store-row">
+                <span><strong>${pl.name}</strong> • ${formatINR(pl.price)}</span>
+                <a href="${pl.link}" target="_blank" rel="noopener noreferrer" class="store-link-btn">Buy Direct</a>
+              </div>
+            `).join('')}
+          </div>
+
+          <div class="card-actions-grid">
+            <button class="btn btn-primary btn-sm" onclick="addToCart(${p.id})">Add to Cart</button>
+            <button class="btn btn-secondary btn-sm" onclick="toggleCompare(${p.id})">${isComp ? 'Selected' : 'Compare'}</button>
+          </div>
+          <div style="text-align:center;margin-top:0.4rem">
+            <button class="btn btn-ghost btn-sm" style="font-size:0.75rem;padding:0.2rem 0.5rem" onclick="openPriceHistory(${p.id})">📈 Price Trends</button>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    /* Category Filter Selection */
+    function selectCategory(cat) {
+      AppState.activeCategory = cat;
+      document.querySelectorAll('.cat-pill').forEach(pill => pill.classList.remove('active'));
+      const activePill = [...document.querySelectorAll('.cat-pill')].find(el => el.textContent.toLowerCase().includes(cat.toLowerCase()));
+      if (activePill) activePill.classList.add('active');
+      renderProductGrid();
+    }
+
+    /* Live Search Handler */
+    let searchDebounce = null;
+    function handleSearchInput(val) {
+      clearTimeout(searchDebounce);
+      searchDebounce = setTimeout(() => {
+        AppState.searchQuery = val;
+        renderProductGrid();
+      }, 200);
+    }
+
+    function handleSortChange(val) {
+      AppState.sortMode = val;
+      renderProductGrid();
+    }
+
+    function handleStockFilter(checked) {
+      AppState.filterInStock = checked;
+      renderProductGrid();
+    }
+
+    function handleDiscountFilter(checked) {
+      AppState.filterDiscounts = checked;
+      renderProductGrid();
+    }
+
+    function resetFilters() {
+      AppState.activeCategory = 'all';
+      AppState.searchQuery = '';
+      getEl('desktopSearchInput').value = '';
+      selectCategory('all');
+      renderProductGrid();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function focusSearch() {
+      getEl('desktopSearchInput').focus();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* Cart Operations */
+    function addToCart(productId) {
+      const prod = PRODUCT_CATALOG.find(p => p.id === productId);
+      if (!prod) return;
+
+      const existing = AppState.cart.find(item => item.id === productId);
+      if (existing) {
+        existing.qty = (existing.qty || 1) + 1;
+      } else {
+        AppState.cart.push({ ...prod, qty: 1 });
+      }
+
+      localStorage.setItem('ek_cart', JSON.stringify(AppState.cart));
+      updateCartCounters();
+      showToast(`Added ${prod.title.slice(0, 24)}... to Cart`, 'success');
+    }
+
+    function updateCartCounters() {
+      const totalCount = AppState.cart.reduce((sum, item) => sum + (item.qty || 1), 0);
+      getEl('headerCartCount').textContent = totalCount;
+      getEl('bnavCartCount').textContent = totalCount;
+    }
+
+    function openCartDrawer() {
+      renderCartDrawerItems();
+      getEl('cartDrawer').classList.add('open');
+      getEl('drawerBackdrop').classList.add('open');
+    }
+
+    function closeCartDrawer() {
+      getEl('cartDrawer').classList.remove('open');
+      getEl('drawerBackdrop').classList.remove('open');
+    }
+
+    function renderCartDrawerItems() {
+      const container = getEl('cartItemsList');
+      container.innerHTML = '';
+
+      if (AppState.cart.length === 0) {
+        container.innerHTML = `<div style="text-align:center;padding:3rem 1rem;color:var(--text-muted)">Your cart is empty.</div>`;
+        getEl('cartSubtotalVal').textContent = '₹0';
+        return;
+      }
+
+      let subtotal = 0;
+      AppState.cart.forEach((item, idx) => {
+        subtotal += item.price * (item.qty || 1);
+        const row = document.createElement('div');
+        row.className = 'drawer-item-row';
+        row.innerHTML = `
+          <img src="${item.image}" alt="${item.title}" class="drawer-item-img">
+          <div style="flex:1">
+            <h4 style="font-size:0.875rem;font-weight:700;line-height:1.3;margin-bottom:0.25rem">${item.title}</h4>
+            <div style="font-weight:800;color:var(--primary-easy);font-family:var(--font-mono)">${formatINR(item.price)}</div>
+            <div style="font-size:0.75rem;color:var(--text-muted)">Qty: ${item.qty || 1}</div>
+          </div>
+          <button class="btn btn-ghost btn-sm" onclick="removeCartItem(${idx})" style="color:var(--danger)">✕</button>
+        `;
+        container.appendChild(row);
+      });
+
+      getEl('cartSubtotalVal').textContent = formatINR(subtotal);
+    }
+
+    function removeCartItem(idx) {
+      AppState.cart.splice(idx, 1);
+      localStorage.setItem('ek_cart', JSON.stringify(AppState.cart));
+      updateCartCounters();
+      renderCartDrawerItems();
+    }
+
+    function emptyShoppingCart() {
+      AppState.cart = [];
+      localStorage.setItem('ek_cart', JSON.stringify(AppState.cart));
+      updateCartCounters();
+      renderCartDrawerItems();
+      showToast('Shopping cart emptied');
+    }
+
+    function simulateCheckout() {
+      if (AppState.cart.length === 0) {
+        showToast('Cart is empty', 'error');
+        return;
+      }
+
+      const newOrder = {
+        id: 'ORD' + Math.floor(100000 + Math.random() * 900000),
+        items: [...AppState.cart],
+        date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+        total: AppState.cart.reduce((s, it) => s + (it.price * (it.qty || 1)), 0)
+      };
+
+      AppState.orders.unshift(newOrder);
+      localStorage.setItem('ek_orders', JSON.stringify(AppState.orders));
+
+      emptyShoppingCart();
+      closeCartDrawer();
+      showToast(`Order #${newOrder.id} successfully created!`, 'success', 3500);
+    }
+
+    /* Wishlist Operations */
+    function toggleWishlist(productId) {
+      const prod = PRODUCT_CATALOG.find(p => p.id === productId);
+      if (!prod) return;
+
+      const idx = AppState.wishlist.findIndex(item => item.id === productId);
+      if (idx !== -1) {
+        AppState.wishlist.splice(idx, 1);
+        showToast(`Removed from Wishlist`);
+      } else {
+        AppState.wishlist.push(prod);
+        showToast(`Saved to Wishlist`, 'success');
+      }
+
+      localStorage.setItem('ek_wishlist', JSON.stringify(AppState.wishlist));
+      updateWishlistCounters();
+      renderProductGrid();
+    }
+
+    function updateWishlistCounters() {
+      const cnt = AppState.wishlist.length;
+      getEl('headerWishlistCount').style.display = cnt > 0 ? 'inline-block' : 'none';
+      getEl('headerWishlistCount').textContent = cnt;
+
+      getEl('bnavWishlistCount').style.display = cnt > 0 ? 'inline-block' : 'none';
+      getEl('bnavWishlistCount').textContent = cnt;
+    }
+
+    function openWishlistDrawer() {
+      renderWishlistDrawerItems();
+      getEl('wishlistDrawer').classList.add('open');
+      getEl('drawerBackdrop').classList.add('open');
+    }
+
+    function closeWishlistDrawer() {
+      getEl('wishlistDrawer').classList.remove('open');
+      getEl('drawerBackdrop').classList.remove('open');
+    }
+
+    function renderWishlistDrawerItems() {
+      const container = getEl('wishlistItemsList');
+      container.innerHTML = '';
+
+      if (AppState.wishlist.length === 0) {
+        container.innerHTML = `<div style="text-align:center;padding:3rem 1rem;color:var(--text-muted)">Your wishlist is empty. Click the heart on any product to save it.</div>`;
+        return;
+      }
+
+      AppState.wishlist.forEach((item, idx) => {
+        const row = document.createElement('div');
+        row.className = 'drawer-item-row';
+        row.innerHTML = `
+          <img src="${item.image}" alt="${item.title}" class="drawer-item-img">
+          <div style="flex:1">
+            <h4 style="font-size:0.875rem;font-weight:700;line-height:1.3;margin-bottom:0.25rem">${item.title}</h4>
+            <div style="font-weight:800;color:var(--primary-easy);font-family:var(--font-mono)">${formatINR(item.price)}</div>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="addToCart(${item.id})">+ Cart</button>
+          <button class="btn btn-ghost btn-sm" onclick="toggleWishlist(${item.id}); renderWishlistDrawerItems()">✕</button>
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    function moveWishlistToCart() {
+      if (AppState.wishlist.length === 0) return;
+      AppState.wishlist.forEach(item => addToCart(item.id));
+      AppState.wishlist = [];
+      localStorage.setItem('ek_wishlist', JSON.stringify([]));
+      updateWishlistCounters();
+      closeWishlistDrawer();
+      openCartDrawer();
+      showToast('All saved items moved to Cart', 'success');
+    }
+
+    /* Comparison Matrix Operations */
+    function toggleCompare(productId) {
+      const prod = PRODUCT_CATALOG.find(p => p.id === productId);
+      if (!prod) return;
+
+      const idx = AppState.compare.findIndex(item => item.id === productId);
+      if (idx !== -1) {
+        AppState.compare.splice(idx, 1);
+      } else {
+        if (AppState.compare.length >= 4) {
+          showToast('You can compare a maximum of 4 items simultaneously', 'error');
+          return;
+        }
+        AppState.compare.push(prod);
+      }
+
+      localStorage.setItem('ek_compare', JSON.stringify(AppState.compare));
+      updateCompareCounters();
+      renderProductGrid();
+    }
+
+    function updateCompareCounters() {
+      const count = AppState.compare.length;
+      getEl('stickyCompareNum').textContent = count;
+      getEl('stickyCompareBar').classList.toggle('visible', count > 0);
+
+      getEl('headerCompareCount').style.display = count > 0 ? 'inline-block' : 'none';
+      getEl('headerCompareCount').textContent = count;
+
+      getEl('bnavCompareCount').style.display = count > 0 ? 'inline-block' : 'none';
+      getEl('bnavCompareCount').textContent = count;
+    }
+
+    function clearAllCompare() {
+      AppState.compare = [];
+      localStorage.setItem('ek_compare', JSON.stringify([]));
+      updateCompareCounters();
+      renderProductGrid();
+    }
+
+    function openCompareModal() {
+      if (AppState.compare.length === 0) {
+        showToast('Select at least one product using the Compare button', 'error');
+        return;
+      }
+
+      const matrix = getEl('compareItemsMatrix');
+      matrix.innerHTML = '';
+
+      AppState.compare.forEach(item => {
+        const col = document.createElement('div');
+        col.style.background = 'var(--bg-card)';
+        col.style.borderRadius = 'var(--radius-md)';
+        col.style.padding = '1rem';
+        col.style.display = 'flex';
+        col.style.flexDirection = 'column';
+
+        col.innerHTML = `
+          <div style="text-align:right;margin-bottom:0.4rem">
+            <button class="btn btn-ghost btn-sm" onclick="toggleCompare(${item.id}); openCompareModal()">✕</button>
+          </div>
+          <img src="${item.image}" alt="${item.title}" style="width:100%;height:130px;object-fit:cover;border-radius:var(--radius-sm);margin-bottom:0.75rem">
+          <h4 style="font-size:0.9rem;font-weight:700;margin-bottom:0.5rem">${item.title}</h4>
+          <div style="font-size:1.15rem;font-weight:800;color:var(--primary-easy);font-family:var(--font-mono);margin-bottom:0.5rem">${formatINR(item.price)}</div>
+          <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.75rem">Rating: ★ ${item.rating} (${item.reviews.toLocaleString()} reviews)</div>
+
+          <div style="margin-top:auto;display:flex;flex-direction:column;gap:0.4rem">
+            ${item.platforms.map(pl => `
+              <a href="${pl.link}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm" style="font-size:0.75rem">Buy on ${pl.name} (${formatINR(pl.price)})</a>
+            `).join('')}
+            <button class="btn btn-primary btn-sm" onclick="addToCart(${item.id})">Add to Cart</button>
+          </div>
+        `;
+        matrix.appendChild(col);
+      });
+
+      getEl('compareModal').classList.add('open');
+    }
+
+    function closeCompareModal() {
+      getEl('compareModal').classList.remove('open');
+    }
+
+    /* Price History Chart Modal */
+    function openPriceHistory(productId) {
+      const prod = PRODUCT_CATALOG.find(p => p.id === productId);
+      if (!prod) return;
+
+      getEl('historyModalTitle').textContent = `📈 ${prod.title.slice(0, 32)}...`;
+      const history = prod.priceHistory || [prod.mrp, prod.price];
+
+      const min = Math.min(...history);
+      const max = Math.max(...history);
+      const current = history[history.length - 1];
+
+      getEl('statLowestPrice').textContent = formatINR(min);
+      getEl('statHighestPrice').textContent = formatINR(max);
+      getEl('statCurrentPrice').textContent = formatINR(current);
+
+      drawHistoryCanvas(history);
+      getEl('priceHistoryModal').classList.add('open');
+    }
+
+    function closePriceHistoryModal() {
+      getEl('priceHistoryModal').classList.remove('open');
+    }
+
+    function drawHistoryCanvas(data) {
+      const canvas = getEl('priceHistoryCanvas');
+      const ctx = canvas.getContext('2d');
+      const w = canvas.width, h = canvas.height;
+
+      ctx.clearRect(0, 0, w, h);
+
+      const min = Math.min(...data);
+      const max = Math.max(...data);
+      const stepX = (w - 60) / (data.length - 1 || 1);
+
+      const getY = val => {
+        if (max === min) return h / 2;
+        const norm = (val - min) / (max - min);
+        return (h - 35) - norm * (h - 70);
+      };
+
+      // Fill area under curve
+      ctx.beginPath();
+      ctx.moveTo(30, h - 25);
+      data.forEach((val, i) => ctx.lineTo(30 + i * stepX, getY(val)));
+      ctx.lineTo(30 + (data.length - 1) * stepX, h - 25);
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(11, 118, 255, 0.15)';
+      ctx.fill();
+
+      // Draw path line
+      ctx.beginPath();
+      data.forEach((val, i) => {
+        const x = 30 + i * stepX;
+        const y = getY(val);
+        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      });
+      ctx.strokeStyle = '#0b76ff';
+      ctx.lineWidth = 3;
+      ctx.stroke();
+
+      // Draw points
+      data.forEach((val, i) => {
+        const x = 30 + i * stepX;
+        const y = getY(val);
+        ctx.beginPath();
+        ctx.arc(x, y, 5, 0, Math.PI * 2);
+        ctx.fillStyle = '#0b76ff';
+        ctx.fill();
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      });
+    }
+
+    /* Account & Orders Modal */
+    function openAccountModal() {
+      getEl('accountNameInput').value = AppState.userName;
+      renderOrdersHistory();
+      getEl('accountModal').classList.add('open');
+    }
+
+    function closeAccountModal() {
+      getEl('accountModal').classList.remove('open');
+    }
+
+    function saveAccountName() {
+      const name = getEl('accountNameInput').value.trim();
+      if (!name) return;
+      AppState.userName = name;
+      localStorage.setItem('ek_user_name', name);
+      getEl('userAccountName').textContent = name;
+      showToast('Profile name updated', 'success');
+      closeAccountModal();
+    }
+
+    function renderOrdersHistory() {
+      const container = getEl('ordersHistoryList');
+      container.innerHTML = '';
+
+      if (AppState.orders.length === 0) {
+        container.innerHTML = `<div style="text-align:center;padding:2rem 1rem;color:var(--text-muted)">No past orders found.</div>`;
+        return;
+      }
+
+      AppState.orders.forEach(ord => {
+        const item = document.createElement('div');
+        item.style.background = 'var(--bg-card)';
+        item.style.padding = '0.75rem';
+        item.style.borderRadius = 'var(--radius-sm)';
+        item.style.display = 'flex';
+        item.style.justifyContent = 'space-between';
+        item.style.alignItems = 'center';
+
+        item.innerHTML = `
+          <div>
+            <strong>${ord.id}</strong>
+            <div style="font-size:0.75rem;color:var(--text-muted)">${ord.date} • ${ord.items.length} item(s)</div>
+          </div>
+          <div style="font-weight:800;color:var(--primary-easy);font-family:var(--font-mono)">${formatINR(ord.total)}</div>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    function closeAllDrawers() {
+      closeCartDrawer();
+      closeWishlistDrawer();
+    }
+
+    /* Import & Export State */
+    function exportAppState() {
+      const data = {
+        cart: AppState.cart,
+        wishlist: AppState.wishlist,
+        compare: AppState.compare,
+        orders: AppState.orders,
+        userName: AppState.userName,
+        theme: AppState.theme
+      };
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `EasyKart_Backup.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('Exported backup successfully', 'success');
+    }
+
+    function triggerImportState() {
+      getEl('stateImportInput').click();
+    }
+
+    function handleStateImport(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = ev => {
+        try {
+          const parsed = JSON.parse(ev.target.result);
+          if (parsed.cart) AppState.cart = parsed.cart;
+          if (parsed.wishlist) AppState.wishlist = parsed.wishlist;
+          if (parsed.compare) AppState.compare = parsed.compare;
+          if (parsed.orders) AppState.orders = parsed.orders;
+          if (parsed.userName) AppState.userName = parsed.userName;
+
+          localStorage.setItem('ek_cart', JSON.stringify(AppState.cart));
+          localStorage.setItem('ek_wishlist', JSON.stringify(AppState.wishlist));
+          localStorage.setItem('ek_compare', JSON.stringify(AppState.compare));
+          localStorage.setItem('ek_orders', JSON.stringify(AppState.orders));
+          localStorage.setItem('ek_user_name', AppState.userName);
+
+          updateCartCounters();
+          updateWishlistCounters();
+          updateCompareCounters();
+          renderProductGrid();
+          showToast('State successfully restored', 'success');
+        } catch (err) {
+          showToast('Invalid JSON file', 'error');
+        }
+      };
+      reader.readAsText(file);
+      e.target.value = '';
+    }
+
+    /* Initialization */
+    function init() {
+      initTheme();
+      updateCartCounters();
+      updateWishlistCounters();
+      updateCompareCounters();
+      getEl('userAccountName').textContent = AppState.userName;
+      renderProductGrid();
+    }
+
+    window.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
